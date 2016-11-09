@@ -33,7 +33,6 @@ public class addFlight extends AppCompatActivity {
     private TextView theActualTimeOfDeparture, theFlightNumber, theDepartureDate, theArrivalDate, theActualTimeOfArrival, theTotalFlightTime;
     private FlightDetails theFlight;
     private Boolean departDateSet = Boolean.FALSE, departTimeSet = Boolean.FALSE, arrivalDateSet = Boolean.FALSE, arrivalTimeSet = Boolean.FALSE;
-//  Comment back
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
