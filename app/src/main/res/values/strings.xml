@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">LogItAll - Fly</string>
+    <string name="title_activity_flights_actvitity">Flights Activity</string>
+    <string name="departure_details_label">Departure Details</string>
+    <string name="arrival_details_label">Arrival Details</string>
+    <string name="FlightsListActivityLabel">Flights</string>
+    <string name="add_flight">Add Flight</string>
+    <string name="flightNumberHint">Flight Number</string>
+    <string name="flightDateHint">Flight Date</string>
+    <string name ="no_flights_in_list_text">"No flights recorded."</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_delete">Delete</string>
+    <string name="atdHint">Departure Time</string>
+    <string name="ataHint">Arrival Time</string>
+    <string name="departureDateHint">Departure Date</string>
+    <string name="arrivalDateHint">Arrival Date</string>
+    <string name="Save">Save</string>
+    <string name="totalFLightTimelabel">Total Flight Time</string>
+    <string name="setDepartureDateHint">Set departure date.</string>
+    <string name="setDepartureTimeHint">Set departure time.</string>
+    <string name="setArrivalDateHint">Set arrival date.</string>
+    <string name="setArrivalTimeHint">Set arrival time.</string>
+
+</resources>
