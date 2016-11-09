@@ -88,7 +88,7 @@ public class FlightListActivity extends AppCompatActivity {
     }
 
     public void addFlightClicked(View view) {
-        Intent intent = new Intent(this, addFlight.class);
+        Intent intent = new Intent(this, editFlight.class);
         startActivity(intent);
     }
 }

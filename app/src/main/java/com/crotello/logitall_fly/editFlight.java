@@ -27,7 +27,7 @@ import java.util.TimeZone;
 
 //todo: Add comments.
 
-public class addFlight extends AppCompatActivity {
+public class editFlight extends AppCompatActivity {
 
     private FlightsContract dbManager;
     private TextView theActualTimeOfDeparture, theFlightNumber, theDepartureDate, theArrivalDate, theActualTimeOfArrival, theTotalFlightTime;
@@ -76,7 +76,7 @@ public class addFlight extends AppCompatActivity {
 
                 DatePickerDialog mDatePicker;
 
-                mDatePicker = new DatePickerDialog(addFlight.this, new DatePickerDialog.OnDateSetListener() {
+                mDatePicker = new DatePickerDialog(editFlight.this, new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
                         // We do not want any element of time in the return so set the Calendar to 0.
@@ -120,7 +120,7 @@ public class addFlight extends AppCompatActivity {
 
                 DatePickerDialog mDatePicker;
 
-                mDatePicker = new DatePickerDialog(addFlight.this, new DatePickerDialog.OnDateSetListener() {
+                mDatePicker = new DatePickerDialog(editFlight.this, new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
                         theCalendar.setTimeInMillis(0);
@@ -128,7 +128,7 @@ public class addFlight extends AppCompatActivity {
                         if (theCalendar.getTimeInMillis() < theFlight.getDepartureDate()) {// Arrival is before departure
                             // Set arrival same as departure
                             theCalendar.setTimeInMillis(theFlight.getDepartureDate());
-                            Toast toast = Toast.makeText(addFlight.this, "Arrival date needs to be same or after Departure date. Changed.", Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(editFlight.this, "Arrival date needs to be same or after Departure date. Changed.", Toast.LENGTH_LONG);
                             toast.show();
                         }
 
@@ -157,7 +157,7 @@ public class addFlight extends AppCompatActivity {
                 int hour = theCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = theCalendar.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(addFlight.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(editFlight.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         theCalendar.setTimeInMillis(0);
@@ -195,7 +195,7 @@ public class addFlight extends AppCompatActivity {
                 int hour = theCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = theCalendar.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(addFlight.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(editFlight.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         theCalendar.setTimeInMillis(0);
@@ -205,7 +205,7 @@ public class addFlight extends AppCompatActivity {
                         if ((theCalendar.getTimeInMillis() < theFlight.getAtd()) & (theFlight.getDepartureDate() == theFlight.getArrivalDate())) {// Arrival is before departure
                             // Set arrival same as departure
                             theCalendar.setTimeInMillis(theFlight.getAtd());
-                            Toast toast = Toast.makeText(addFlight.this, "Arrival time needs to be same or after Departure time. Changed.", Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(editFlight.this, "Arrival time needs to be same or after Departure time. Changed.", Toast.LENGTH_LONG);
                             toast.show();
                         }
 
