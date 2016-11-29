@@ -20,8 +20,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     private String viewToUse;
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState ) {
+    //@Override
+    public Dialog onCreateDialog(TextView theDepartureTimeTextViewToUpdate, TextView theArrivalTimeTextViewToUpdate,Bundle savedInstanceState ) {
         // Use the current time as the default values for the picker
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);

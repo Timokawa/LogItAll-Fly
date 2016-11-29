@@ -4,7 +4,7 @@
     <string name="departure_details_label">Departure Details</string>
     <string name="arrival_details_label">Arrival Details</string>
     <string name="FlightsListActivityLabel">Flights</string>
-    <string name="add_flight">Add Flight</string>
+    <string name="edit_flight">Edit Flight</string>
     <string name="flightNumberHint">Flight Number</string>
     <string name="flightDateHint">Flight Date</string>
     <string name ="no_flights_in_list_text">"No flights recorded."</string>
@@ -20,5 +20,8 @@
     <string name="setDepartureTimeHint">Set departure time.</string>
     <string name="setArrivalDateHint">Set arrival date.</string>
     <string name="setArrivalTimeHint">Set arrival time.</string>
+    <string name="delete">Delete Flight</string>
+    <string name="cancel">Cancel</string>
+    <string name="addFlight">Add Flight</string>
 
 </resources>

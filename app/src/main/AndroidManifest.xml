@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crotello.logitall_fly">
-<uses-sdk android:maxSdkVersion="24"
-    android:targetSdkVersion="24"
-    android:minSdkVersion="19">
-</uses-sdk>
+
+    <uses-sdk
+        android:maxSdkVersion="24"
+        android:minSdkVersion="19"
+        android:targetSdkVersion="24"></uses-sdk>
 
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,14 +25,10 @@
                 /
             </intent-filter>
         </activity>
-        <activity
-            android:name=".addFlight"
-            android:label="@string/add_flight">
-        </activity>
+        <activity android:name=".editFlight"></activity>
         <activity
             android:name=".ModifyFlightActivity"
-            android:label="Modify Flight">
-        </activity>
+            android:label="Modify Flight"></activity>
 
     </application>
 
