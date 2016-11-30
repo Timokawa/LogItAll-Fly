@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2016. Crotello.  Please do not copy without authorisation.
   -->
 
@@ -10,9 +9,29 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:weightSum="1">
-<!-- TODO: Add the rest of the flight details to date
-    Will it be a tabbed page?
-    -->
+    <!-- TODO: Add the rest of the flight details to date
+        Will it be a tabbed page?
+        -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <AutoCompleteTextView
+            android:text="AutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/autoCompleteTextView" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,12 +60,12 @@
     </LinearLayout>
 
     <EditText
-        android:inputType="textNoSuggestions"
         android:id="@+id/setFlightNumber"
         style="@android:style/Widget.DeviceDefault.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/flightNumberHint"
+        android:inputType="textNoSuggestions"
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
@@ -93,8 +112,8 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="4dp"
-            android:textSize="16sp"
-            android:text="@string/setDepartureTimeHint" />
+            android:text="@string/setDepartureTimeHint"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -119,14 +138,14 @@
             android:id="@+id/setFlightArrivalDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
             android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="4dp"
-            android:textSize="16sp"
-            android:text="@string/setArrivalDateHint" />
+            android:text="@string/setArrivalDateHint"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/setFlightAta"
@@ -152,6 +171,7 @@
         android:paddingTop="8dp"
         android:text="@string/totalFLightTimelabel"
         android:textSize="14sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -162,8 +182,8 @@
             android:id="@+id/totalFlightTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
             android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -171,31 +191,30 @@
             android:textSize="16sp" />
 
 
-
     </LinearLayout>
 
     <LinearLayout
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="1"
-        style="?android:attr/buttonBarButtonStyle">
+        android:weightSum="1">
 
         <Button
             android:id="@+id/btn_delete"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="deleteFlight"
-            android:text="@string/btn_delete"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/btn_delete" />
 
         <Button
             android:id="@+id/btn_save"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="saveFlight"
-            android:text="@string/Save"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/Save" />
     </LinearLayout>
 
 </LinearLayout>
