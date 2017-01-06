@@ -2,6 +2,7 @@ package com.crotello.logitall_fly.datamanipulation;
 
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -29,8 +30,31 @@ public class FlightDetails {
     // Lookup to another database
     private int ICAO_Departure;
     private int ICAO_Destination;
-
+    private int Aircraft_Number;
     private int AircraftType;
+    private boolean ValidToSave;
+
+    // Constructor
+    public FlightDetails() {
+        Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
+        Date rightNow = new Date();
+        _id = null;
+        flightNumber = "";
+        departureDate = theCalendar.getTimeInMillis();
+        arrivalDate = theCalendar.getTimeInMillis();
+        ata = theCalendar.getTimeInMillis();
+        atd = theCalendar.getTimeInMillis();
+        flightTimeTotal = Long.MIN_VALUE;
+        flightTimeDay = Long.MIN_VALUE;
+        flightTimeNight = Long.MIN_VALUE;
+        ICAO_Departure = 0;
+        ICAO_Destination = 0;
+        role = "";
+        pic = "";
+        AircraftType = 0;
+        Aircraft_Number = 0;
+        ValidToSave = false;
+    }
 
     public int getAircraft_Number() {
         return Aircraft_Number;
@@ -47,8 +71,6 @@ public class FlightDetails {
     public void setAircraftType(int aircraftType) {
         AircraftType = aircraftType;
     }
-
-    private int Aircraft_Number;
 
     public String getRole() {
         return role;
@@ -90,7 +112,6 @@ public class FlightDetails {
         this.flightNumber = flightNumber;
     }
 
-
     public long getFlightTimeTotal() {
         return flightTimeTotal;
     }
@@ -115,62 +136,6 @@ public class FlightDetails {
         this.flightTimeNight = flightTimeNight;
     }
 
-
-    // Constructor
-    public FlightDetails() {
-        Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
-        Date rightNow = new Date();
-        _id = null;
-        flightNumber = "";
-        departureDate = theCalendar.getTimeInMillis();
-        arrivalDate = theCalendar.getTimeInMillis();
-        ata = theCalendar.getTimeInMillis();
-        atd = theCalendar.getTimeInMillis();
-        flightTimeTotal = Long.MIN_VALUE;
-        flightTimeDay = Long.MIN_VALUE;
-        flightTimeNight = Long.MIN_VALUE;
-        ICAO_Departure = 0;
-        ICAO_Destination = 0;
-        role = "";
-        pic = "";
-        AircraftType = 0;
-        Aircraft_Number = 0;
-    }
-
-
-    public void set_id(Long _id) {
-
-        this._id = _id;
-    }
-
-    public void setFlight_Number(String flightNumber) {
-
-        this.flightNumber = flightNumber;
-    }
-
-    public void setDepartureDate(Long departureDate) {
-        this.departureDate = departureDate;
-        updateTotal_Time();
-    }
-
-
-    public void setArrivalDate(Long arrivalDate) {
-        this.arrivalDate = arrivalDate;
-        updateTotal_Time();
-    }
-
-
-    public void setAtd(Long atd) {
-        this.atd = atd;
-        updateTotal_Time();
-    }
-
-
-    public void setAta(Long ata) {
-        this.ata = ata;
-        updateTotal_Time();
-    }
-
     private void updateTotal_Time() {
         if ((this.arrivalDate + this.ata) - (this.departureDate + this.atd) > 0) {
 
@@ -180,10 +145,14 @@ public class FlightDetails {
         }
     }
 
-
     public Long get_id() {
 
         return _id;
+    }
+
+    public void set_id(Long _id) {
+
+        this._id = _id;
     }
 
     public String getFlight_Number() {
@@ -191,9 +160,19 @@ public class FlightDetails {
         return flightNumber;
     }
 
+    public void setFlight_Number(String flightNumber) {
+
+        this.flightNumber = flightNumber;
+    }
+
     public long getDepartureDate() {
 
         return departureDate;
+    }
+
+    public void setDepartureDate(Long departureDate) {
+        this.departureDate = departureDate;
+        updateTotal_Time();
     }
 
     public long getArrivalDate() {
@@ -201,14 +180,72 @@ public class FlightDetails {
         return arrivalDate;
     }
 
+    public void setArrivalDate(Long arrivalDate) {
+        this.arrivalDate = arrivalDate;
+        updateTotal_Time();
+    }
+
     public long getAtd() {
 
         return atd;
     }
 
+    public void setAtd(Long atd) {
+        this.atd = atd;
+        updateTotal_Time();
+    }
+
     public long getAta() {
 
         return ata;
+    }
+
+    public void setAta(Long ata) {
+        this.ata = ata;
+        updateTotal_Time();
+    }
+
+    public String getFormattedDepartureDate() {
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return dateFormat.format(getDepartureDate());
+    }
+
+    public String getFormattedArrivalDate() {
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return dateFormat.format(getArrivalDate());
+
+    }
+
+    public String getFormattedArrivalTime() {
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return timeFormat.format(getAta());
+
+    }
+
+    public String getFormattedDepartureTime() {
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return timeFormat.format(getAtd());
+    }
+
+    public String getFormattedFlightTimeTotal() {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return timeFormat.format(getFlightTimeTotal());
+    }
+
+    public boolean validToSave() {
+        return (
+                (getDepartureDate() > 0) &
+                        (getFlight_Number().equals("")));
     }
 
 }
