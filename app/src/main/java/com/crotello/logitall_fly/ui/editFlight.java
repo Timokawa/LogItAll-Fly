@@ -2,7 +2,7 @@
  * Copyright (c) 2016. Crotello.  Please do not copy without authorisation.
  */
 
-package com.crotello.logitall_fly;
+package com.crotello.logitall_fly.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.crotello.logitall_fly.database.FlightsContract;
+import com.crotello.logitall_fly.R;
+import com.crotello.logitall_fly.datastorage.FlightsContract;
+import com.crotello.logitall_fly.datamanipulation.FlightDetails;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,7 +33,7 @@ import java.util.TimeZone;
 
 public class editFlight extends AppCompatActivity {
     private FlightsContract dbManager;
-    private TextView theActualTimeOfDeparture, theFlightNumber, theDepartureDate, theArrivalDate, theActualTimeOfArrival, theTotalFlightTime;
+    private TextView theActualTimeOfDepartureTV, theFlightNumberTV, theDepartureDateTV, theArrivalDateTV, theActualTimeOfArrivalTV, theTotalFlightTimeTV;
     private FlightDetails theFlight;
     private Boolean departDateSet = Boolean.FALSE, departTimeSet = Boolean.FALSE, arrivalDateSet = Boolean.FALSE, arrivalTimeSet = Boolean.FALSE;
 
@@ -42,25 +44,24 @@ public class editFlight extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_flight);
 
-        //final Context context = getApplicationContext();
         dbManager = new FlightsContract(this);
         dbManager.open();
 
         theFlight = new FlightDetails();
         // Create some variables that represent the TextViews we are
         // going to retrieve data from later.
-        theFlightNumber = (TextView) findViewById(R.id.setFlightNumber);
-        theDepartureDate = (TextView) findViewById(R.id.setFlightDepartureDate);
-        theArrivalDate = (TextView) findViewById(R.id.setFlightArrivalDate);
-        theActualTimeOfDeparture = (TextView) findViewById(R.id.setFlightAtd);
-        theActualTimeOfArrival = (TextView) findViewById(R.id.setFlightAta);
-        theTotalFlightTime = (TextView) findViewById(R.id.totalFlightTime);
+        theFlightNumberTV = (TextView) findViewById(R.id.setFlightNumber);
+        theDepartureDateTV = (TextView) findViewById(R.id.setFlightDepartureDate);
+        theArrivalDateTV = (TextView) findViewById(R.id.setFlightArrivalDate);
+        theActualTimeOfDepartureTV = (TextView) findViewById(R.id.setFlightAtd);
+        theActualTimeOfArrivalTV = (TextView) findViewById(R.id.setFlightAta);
+        theTotalFlightTimeTV = (TextView) findViewById(R.id.totalFlightTime);
 
-        theTotalFlightTime.setVisibility(View.INVISIBLE);
+        theTotalFlightTimeTV.setVisibility(View.INVISIBLE);
 
-        setTheTotalFlightTimeText();
+        settheTotalFlightTimeTVText();
 
-        theDepartureDate.setOnClickListener(new View.OnClickListener() {
+        theDepartureDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //To show current date in the datepicker (theFlight is initialised with today's date).
@@ -87,15 +88,15 @@ public class editFlight extends AppCompatActivity {
                         theCalendar.setTimeInMillis(0);
                         theCalendar.set(selectedYear, (selectedMonth), selectedDay);
 
-                        theDepartureDate.setText(dateFormat.format(theCalendar.getTimeInMillis()));
+                        theDepartureDateTV.setText(dateFormat.format(theCalendar.getTimeInMillis()));
                         theFlight.setDepartureDate(theCalendar.getTimeInMillis());
                         departDateSet = Boolean.TRUE;
 
                         // Set arrival date to the same.
-                        theArrivalDate.setText(dateFormat.format(theCalendar.getTimeInMillis()));
+                        theArrivalDateTV.setText(dateFormat.format(theCalendar.getTimeInMillis()));
                         theFlight.setArrivalDate(theCalendar.getTimeInMillis());
                         arrivalDateSet = Boolean.TRUE;
-                        setTheTotalFlightTimeText();
+                        settheTotalFlightTimeTVText();
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select Departure Date");
@@ -103,7 +104,7 @@ public class editFlight extends AppCompatActivity {
             }
         });
 
-        theArrivalDate.setOnClickListener(new View.OnClickListener() {
+        theArrivalDateTV.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -135,10 +136,10 @@ public class editFlight extends AppCompatActivity {
                             toast.show();
                         }
 
-                        theArrivalDate.setText(dateFormat.format(theCalendar.getTimeInMillis()));
+                        theArrivalDateTV.setText(dateFormat.format(theCalendar.getTimeInMillis()));
                         theFlight.setArrivalDate(theCalendar.getTimeInMillis());
                         arrivalDateSet = Boolean.TRUE;
-                        setTheTotalFlightTimeText();
+                        settheTotalFlightTimeTVText();
 
                     }
                 }, mYear, mMonth, mDay);
@@ -148,7 +149,7 @@ public class editFlight extends AppCompatActivity {
         });
 
 
-        theActualTimeOfDeparture.setOnClickListener(new View.OnClickListener() {
+        theActualTimeOfDepartureTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
@@ -168,15 +169,15 @@ public class editFlight extends AppCompatActivity {
                         theCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         theCalendar.set(Calendar.MINUTE, selectedMinute);
 
-                        theActualTimeOfDeparture.setText(timeFormat.format(theCalendar.getTimeInMillis()));
+                        theActualTimeOfDepartureTV.setText(timeFormat.format(theCalendar.getTimeInMillis()));
                         theFlight.setAtd(theCalendar.getTimeInMillis());
                         departTimeSet = Boolean.TRUE;
 
-                        theActualTimeOfArrival.setText(timeFormat.format(theCalendar.getTimeInMillis()));
+                        theActualTimeOfArrivalTV.setText(timeFormat.format(theCalendar.getTimeInMillis()));
                         theFlight.setAta(theCalendar.getTimeInMillis());
 
                         arrivalTimeSet = Boolean.TRUE;
-                        setTheTotalFlightTimeText();
+                        settheTotalFlightTimeTVText();
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -186,7 +187,7 @@ public class editFlight extends AppCompatActivity {
         });
 
 
-        theActualTimeOfArrival.setOnClickListener(new View.OnClickListener() {
+        theActualTimeOfArrivalTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
@@ -212,10 +213,10 @@ public class editFlight extends AppCompatActivity {
                             toast.show();
                         }
 
-                        theActualTimeOfArrival.setText(timeFormat.format(theCalendar.getTimeInMillis()));
+                        theActualTimeOfArrivalTV.setText(timeFormat.format(theCalendar.getTimeInMillis()));
                         theFlight.setAta(theCalendar.getTimeInMillis());
                         arrivalTimeSet = Boolean.TRUE;
-                        setTheTotalFlightTimeText();
+                        settheTotalFlightTimeTVText();
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Arrival Time");
@@ -226,7 +227,7 @@ public class editFlight extends AppCompatActivity {
 
     }
 
-    private void setTheTotalFlightTimeText() {
+    private void settheTotalFlightTimeTVText() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -237,10 +238,10 @@ public class editFlight extends AppCompatActivity {
         // Force the update.
         theCalendar.getTime();
 
-        theTotalFlightTime.setText(timeFormat.format(theCalendar.getTimeInMillis()));
+        theTotalFlightTimeTV.setText(timeFormat.format(theCalendar.getTimeInMillis()));
 
         if (departDateSet & departTimeSet & arrivalDateSet & arrivalTimeSet) {
-            theTotalFlightTime.setVisibility(View.VISIBLE);
+            theTotalFlightTimeTV.setVisibility(View.VISIBLE);
         }
     }
 
@@ -253,7 +254,7 @@ public class editFlight extends AppCompatActivity {
             CharSequence text = "Flight Saved";
             int duration = Toast.LENGTH_SHORT;
 
-            theFlight.setFlight_Number(theFlightNumber.getText().toString());
+            theFlight.setFlight_Number(theFlightNumberTV.getText().toString());
 
             dbManager.insert(theFlight);
             //Tidy up.
