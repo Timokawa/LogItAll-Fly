@@ -34,7 +34,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         viewToUse = this.getArguments().getString("TimeChanged");
 
         // Create a new instance of TimePickerDialog and return it
-        return new TimePickerDialog(getActivity(), this, hour, minute,
+        return new TimePickerDialog(getActivity(), R.style.DialogTheme,this, hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
     }
 

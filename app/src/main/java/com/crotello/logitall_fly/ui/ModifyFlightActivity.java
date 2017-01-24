@@ -47,7 +47,7 @@ public class ModifyFlightActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle("Modify Record");
+        setTitle("Flight Details");
 
         setContentView(R.layout.edit_flight);
 

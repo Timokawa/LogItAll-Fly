@@ -3,6 +3,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,11 +46,11 @@
 
     <EditText
         android:id="@+id/setFlightNumber"
-        style="@android:style/Widget.DeviceDefault.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/flightNumberHint"
-        android:inputType="textNoSuggestions"
+        android:inputType="textCapCharacters"
+        android:background="@android:color/transparent"
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
@@ -58,27 +59,23 @@
         android:textSize="16sp"
         tools:ignore="TextFields" />
 
-    <TextView
-        android:id="@+id/departure_details_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp"
-        android:text="@string/departure_details_label" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="false"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/imageViewTakeOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/takeOffIcon"
+            app:srcCompat="@drawable/ic_flight_takeoff" />
+
         <TextView
             android:id="@+id/setFlightDepartureDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:background="@android:color/transparent"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
@@ -92,25 +89,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
+            android:background="@android:color/transparent"
+            android:gravity="end"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="4dp"
             android:text="@string/setDepartureTimeHint"
+            android:textAlignment="textEnd"
             android:textSize="16sp" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/arrival_details_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp"
-        android:text="@string/arrival_details_label"
-        android:textSize="14sp" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,15 +110,21 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
+        <ImageView
+            android:id="@+id/imageViewLand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/landIcon"
+            app:srcCompat="@drawable/ic_flight_land" />
         <TextView
             android:id="@+id/setFlightArrivalDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
+
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:background="@android:color/transparent"
             android:paddingTop="4dp"
             android:text="@string/setArrivalDateHint"
             android:textSize="16sp" />
@@ -136,11 +134,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="end"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="4dp"
             android:text="@string/setArrivalTimeHint"
+            android:textAlignment="textEnd"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -176,6 +177,7 @@
 
 
     </LinearLayout>
+
 
     <LinearLayout
         style="?android:attr/buttonBarButtonStyle"

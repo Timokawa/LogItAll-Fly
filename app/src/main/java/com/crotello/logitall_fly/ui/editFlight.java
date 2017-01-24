@@ -34,7 +34,7 @@ import java.util.TimeZone;
 public class editFlight extends AppCompatActivity {
 
     private FlightsContract dbManager;
-    private TextView theActualTimeOfDepartureTextView, theFlightNumberTextView, theDepartureDateTV, theArrivalDateTV, theActualTimeOfArrivalTextView, theFlightTimeTotalTextView;
+    private TextView theActualTimeOfDepartureTextView, theFlightNumberTextView, theDepartureDateTextView, theArrivalDateTextView, theActualTimeOfArrivalTextView, theFlightTimeTotalTextView;
     private FlightDetails theFlight;
     private Boolean departDateSet = Boolean.FALSE, flightNumberSet = Boolean.FALSE, arrivalDateSet = Boolean.FALSE, arrivalTimeSet = Boolean.FALSE;
 
@@ -45,6 +45,8 @@ public class editFlight extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_flight);
 
+        setTitle("Flight Details");
+
         dbManager = new FlightsContract(this);
         dbManager.open();
 
@@ -52,17 +54,22 @@ public class editFlight extends AppCompatActivity {
         // Create some variables that represent the TextViews we are
         // going to retrieve data from later.
         theFlightNumberTextView = (TextView) findViewById(R.id.setFlightNumber);
-        theDepartureDateTV = (TextView) findViewById(R.id.setFlightDepartureDate);
-        theArrivalDateTV = (TextView) findViewById(R.id.setFlightArrivalDate);
+        theDepartureDateTextView = (TextView) findViewById(R.id.setFlightDepartureDate);
+        theArrivalDateTextView = (TextView) findViewById(R.id.setFlightArrivalDate);
         theActualTimeOfDepartureTextView = (TextView) findViewById(R.id.setFlightAtd);
         theActualTimeOfArrivalTextView = (TextView) findViewById(R.id.setFlightAta);
         theFlightTimeTotalTextView = (TextView) findViewById(R.id.totalFlightTime);
+
+        theDepartureDateTextView.setText(theFlight.getFormattedDepartureDate());
+        theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
+        theActualTimeOfDepartureTextView.setText(theFlight.getFormattedDepartureTime());
+        theActualTimeOfArrivalTextView.setText(theFlight.getFormattedArrivalTime());
 
         theFlightTimeTotalTextView.setVisibility(View.INVISIBLE);
 
         setTheFlightTimeTotalTextView();
 
-        theDepartureDateTV.setOnClickListener(new View.OnClickListener() {
+        theDepartureDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //To show current date in the datepicker (theFlight is initialised with today's date).
@@ -79,7 +86,7 @@ public class editFlight extends AppCompatActivity {
 
                 DatePickerDialog mDatePicker;
 
-                mDatePicker = new DatePickerDialog(editFlight.this, new DatePickerDialog.OnDateSetListener() {
+                mDatePicker = new DatePickerDialog(editFlight.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
                         // We do not want any element of time in the return so set the Calendar to 0.
@@ -88,11 +95,11 @@ public class editFlight extends AppCompatActivity {
                         theCalendar.set(selectedYear, (selectedMonth), selectedDay);
 
                         theFlight.setDepartureDate(theCalendar.getTimeInMillis());
-                        theDepartureDateTV.setText(theFlight.getFormattedDepartureDate());
+                        theDepartureDateTextView.setText(theFlight.getFormattedDepartureDate());
 
                         // The arrival date is always going to be the same or later.
                         theFlight.setArrivalDate(theCalendar.getTimeInMillis());
-                        theArrivalDateTV.setText(theFlight.getFormattedArrivalDate());
+                        theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
 
                         setTheFlightTimeTotalTextView();
                     }
@@ -102,7 +109,7 @@ public class editFlight extends AppCompatActivity {
             }
         });
 
-        theArrivalDateTV.setOnClickListener(new View.OnClickListener() {
+        theArrivalDateTextView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -122,7 +129,7 @@ public class editFlight extends AppCompatActivity {
 
                 DatePickerDialog mDatePicker;
 
-                mDatePicker = new DatePickerDialog(editFlight.this, new DatePickerDialog.OnDateSetListener() {
+                mDatePicker = new DatePickerDialog(editFlight.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
                         theCalendar.setTimeInMillis(0);
@@ -136,7 +143,7 @@ public class editFlight extends AppCompatActivity {
                         }
 
                         theFlight.setArrivalDate(theCalendar.getTimeInMillis());
-                        theArrivalDateTV.setText(theFlight.getFormattedArrivalDate());
+                        theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
 
                         setTheFlightTimeTotalTextView();
 
@@ -160,7 +167,7 @@ public class editFlight extends AppCompatActivity {
                 int hour = theCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = theCalendar.get(Calendar.MINUTE);
 
-                TimePickerDialog mTimePicker = new TimePickerDialog(editFlight.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog mTimePicker = new TimePickerDialog(editFlight.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         theCalendar.setTimeInMillis(0);
@@ -193,7 +200,7 @@ public class editFlight extends AppCompatActivity {
                 int hour = theCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = theCalendar.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(editFlight.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(editFlight.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         theCalendar.setTimeInMillis(0);
@@ -229,11 +236,13 @@ public class editFlight extends AppCompatActivity {
 
 
     public void saveFlight(View view) throws IOException {
+
         theFlight.setFlight_Number(theFlightNumberTextView.getText().toString());
 
         Context context = getApplicationContext();
 
         if (theFlight.validToSave()) {
+
             dbManager.insert(theFlight);
             dbManager.close();
 

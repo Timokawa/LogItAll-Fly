@@ -7,7 +7,7 @@
     <string name="edit_flight">Edit Flight</string>
     <string name="flightNumberHint">Flight Number</string>
     <string name="flightDateHint">Flight Date</string>
-    <string name ="no_flights_in_list_text">"No flights recorded."</string>
+    <string name ="no_flights_in_list_text">No flights recorded</string>
     <string name="btn_update">Update</string>
     <string name="btn_delete">Delete</string>
     <string name="atdHint">Departure Time</string>
@@ -16,12 +16,14 @@
     <string name="arrivalDateHint">Arrival Date</string>
     <string name="Save">Save</string>
     <string name="totalFLightTimelabel">Total Flight Time</string>
-    <string name="setDepartureDateHint">Set departure date.</string>
+    <string name="setDepartureDateHint">Set departure date</string>
     <string name="setDepartureTimeHint">Set departure time.</string>
     <string name="setArrivalDateHint">Set arrival date.</string>
     <string name="setArrivalTimeHint">Set arrival time.</string>
     <string name="delete">Delete Flight</string>
     <string name="cancel">Cancel</string>
     <string name="addFlight">Add Flight</string>
+    <string name="takeOffIcon">Take Off Icon</string>
+    <string name="landIcon">Land Icon</string>
 
 </resources>
