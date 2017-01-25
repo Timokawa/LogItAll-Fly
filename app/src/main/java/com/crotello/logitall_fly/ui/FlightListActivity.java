@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.crotello.logitall_fly.R;
+import com.crotello.logitall_fly.datamanipulation.FlightDetails;
 import com.crotello.logitall_fly.datastorage.FlightsContract;
 
 
@@ -40,10 +41,10 @@ public class FlightListActivity extends AppCompatActivity {
     private ListView listView;
     private FlightsCursorAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         final FlightDetails theFlight = new FlightDetails();
 
         setContentView(R.layout.flight_list_view);
 
@@ -79,6 +80,14 @@ public class FlightListActivity extends AppCompatActivity {
                 modify_intent.putExtra("atd", flightATDTextView.getText().toString());
                 modify_intent.putExtra("ata", flightATATextView.getText().toString());
                 modify_intent.putExtra("id", idTextView.getText().toString());
+
+
+
+               Cursor cursor  = dbManager.getFlight(Long.parseLong(idTextView.getText().toString()));
+                // Use the adapter to bind the curosr to a flight
+               FlightDetails theFlight= adapter.bindFlight(cursor);
+
+                modify_intent.putExtra("theFlight",theFlight);
 
                 startActivity(modify_intent);
             }

@@ -23,6 +23,21 @@ public class FlightsContract {
     private SQLiteDatabase database;
     private com.crotello.logitall_fly.datastorage.FlightsDBHelper theDBHelper;
 
+    private String[] columns = new String[]{
+            FlightEntry._ID,
+            FlightEntry.COLUMN_FLIGHT_NUMBER,
+            FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME,
+            FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME,
+            FlightEntry.COLUMN_NIGHT_HOURS,
+            FlightEntry.COLUMN_DAY_HOURS,
+            FlightEntry.COLUMN_TOTAL_HOURS,
+            FlightEntry.COLUMN_ROLE,
+            FlightEntry.COLUMN_PIC,
+            FlightEntry.COLUMN_Aircraft_Type,
+            FlightEntry.COLUMN_Aircraft_Number,
+            FlightEntry.COLUMN_ICAO_Departure,
+            FlightEntry.COLUMN_ICAO_Destination};
+
 
     public static final class FlightEntry implements BaseColumns {
         // Table Name
@@ -98,23 +113,8 @@ public class FlightsContract {
     // It is for them to reformat as required.
     public Cursor fetch() {
         int howManyRows = 0;
-        String[] columns = new String[]{
-                FlightEntry._ID,
-                FlightEntry.COLUMN_FLIGHT_NUMBER,
-                FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME,
-                FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME,
-                FlightEntry.COLUMN_NIGHT_HOURS,
-                FlightEntry.COLUMN_DAY_HOURS,
-                FlightEntry.COLUMN_TOTAL_HOURS,
-                FlightEntry.COLUMN_ROLE,
-                FlightEntry.COLUMN_PIC,
-                FlightEntry.COLUMN_Aircraft_Type,
-                FlightEntry.COLUMN_Aircraft_Number,
-                FlightEntry.COLUMN_ICAO_Departure,
-                FlightEntry.COLUMN_ICAO_Destination};
 
         Cursor cursor = database.query(FlightEntry.TABLE_NAME, columns, null, null, null, null, FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME + " DESC");
-
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -163,6 +163,13 @@ public class FlightsContract {
         //
         database.delete(FlightEntry.TABLE_NAME, FlightEntry._ID + "=" + _id, null);
 
+    }
+
+    public Cursor getFlight (long _id) {
+        FlightDetails theFlight = new FlightDetails();
+
+        Cursor cursor =  database.query(FlightEntry.TABLE_NAME,  columns, null, null, null, null, FlightEntry._ID + " = " + _id);
+        return cursor;
     }
 
 }

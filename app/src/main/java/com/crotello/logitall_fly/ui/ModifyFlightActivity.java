@@ -118,7 +118,7 @@ public class ModifyFlightActivity extends AppCompatActivity implements View.OnCl
 
                 theCalendar.setTimeInMillis(0);
 
-                theFlight.setFlight_Number(modifyFlightNumberText.getText().toString());
+                theFlight.setFlightNumber(modifyFlightNumberText.getText().toString());
 
                 // Departure Date
                 try {
@@ -233,7 +233,7 @@ public class ModifyFlightActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void populateTheFlight(){
-        theFlight.setFlight_Number(modifyFlightNumberText.getText().toString());
+        theFlight.setFlightNumber(modifyFlightNumberText.getText().toString());
 
         // Departure Date
         try {

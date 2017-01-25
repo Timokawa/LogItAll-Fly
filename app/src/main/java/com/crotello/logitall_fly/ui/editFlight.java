@@ -237,7 +237,7 @@ public class editFlight extends AppCompatActivity {
 
     public void saveFlight(View view) throws IOException {
 
-        theFlight.setFlight_Number(theFlightNumberTextView.getText().toString());
+        theFlight.setFlightNumber(theFlightNumberTextView.getText().toString());
 
         Context context = getApplicationContext();
 

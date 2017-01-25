@@ -7,6 +7,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 import com.crotello.logitall_fly.R;
+import com.crotello.logitall_fly.datamanipulation.FlightDetails;
 import com.crotello.logitall_fly.datastorage.FlightsContract;
 
 import java.text.SimpleDateFormat;
@@ -65,4 +66,27 @@ public class FlightsCursorAdapter extends ResourceCursorAdapter {
         tvATD.setText(departTime);
         tvATA.setText(arriveTime);
     }
+
+    public FlightDetails bindFlight (Cursor cursor){
+    FlightDetails theFlight =new FlightDetails();
+        theFlight.set_id(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry._ID)));
+        theFlight.setFlightNumber(cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_FLIGHT_NUMBER)));
+
+       // private Long departureDate;
+        //private Long arrivalDate;
+        //private Long ata;
+        //private Long atd;
+      //  private Long flightTimeTotal;
+      //  private Long flightTimeDay;
+      //  private Long flightTimeNight;
+      //  private String role;
+     //   private String pic;
+        // Lookup to another database
+     //   private int ICAO_Departure;
+     //   private int ICAO_Destination;
+     //   private int Aircraft_Number;
+     //   private int AircraftType;
+     //   private boolean ValidToSave;
+            return theFlight;}
+
 }

@@ -2,6 +2,7 @@ package com.crotello.logitall_fly.datamanipulation;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.TimeZone;
  * Created by Tim on 14/09/2016.
  */
 
-public class FlightDetails {
+public class FlightDetails implements Serializable{
 
     //Variables that every flight has.
     //TODO Can this be Int?
@@ -35,7 +36,7 @@ public class FlightDetails {
     private boolean ValidToSave;
 
     // Constructor
-    public FlightDetails() {
+    public FlightDetails()  {
         Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
         Date rightNow = new Date();
         _id = null;
@@ -160,10 +161,6 @@ public class FlightDetails {
         return flightNumber;
     }
 
-    public void setFlight_Number(String flightNumber) {
-
-        this.flightNumber = flightNumber;
-    }
 
     public long getDepartureDate() {
 
