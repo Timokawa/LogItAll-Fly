@@ -22,8 +22,10 @@ public class FlightListActivity extends AppCompatActivity {
     final String[] from = new String[]{
             FlightsContract.FlightEntry._ID,
             FlightsContract.FlightEntry.COLUMN_FLIGHT_NUMBER,
-            FlightsContract.FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME,
-            FlightsContract.FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME
+            FlightsContract.FlightEntry.COLUMN_DEPARTURE_DATE,
+            FlightsContract.FlightEntry.COLUMN_DEPARTURE_TIME,
+            FlightsContract.FlightEntry.COLUMN_ARRIVAL_DATE,
+            FlightsContract.FlightEntry.COLUMN_ARRIVAL_TIME
     };
     // This details what will be displayed.
     // It is deliberately limited otherwise a whole flight will take up the screen.
@@ -67,27 +69,28 @@ public class FlightListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 TextView idTextView = (TextView) view.findViewById(R.id.flight_id_textView);
-                TextView flightNumberTextView = (TextView) view.findViewById(R.id.flight_number_textView);
-                TextView flightDepartureDateTextView = (TextView) view.findViewById(R.id.departure_date_textView);
-                TextView flightArrivalDateTextView = (TextView) view.findViewById(R.id.arrival_date_textView);
-                TextView flightATDTextView = (TextView) view.findViewById(R.id.departure_time_textView);
-                TextView flightATATextView = (TextView) view.findViewById(R.id.arrival_time_textView);
+//                TextView flightNumberTextView = (TextView) view.findViewById(R.id.flight_number_textView);
+//                TextView flightDepartureDateTextView = (TextView) view.findViewById(R.id.departure_date_textView);
+//                TextView flightArrivalDateTextView = (TextView) view.findViewById(R.id.arrival_date_textView);
+//                TextView flightATDTextView = (TextView) view.findViewById(R.id.departure_time_textView);
+//                TextView flightATATextView = (TextView) view.findViewById(R.id.arrival_time_textView);
 
-                Intent modify_intent = new Intent(getApplicationContext(), ModifyFlightActivity.class);
-                modify_intent.putExtra("flightnumber", flightNumberTextView.getText().toString());
-                modify_intent.putExtra("departuredate", flightDepartureDateTextView.getText().toString());
-                modify_intent.putExtra("arrivaldate", flightArrivalDateTextView.getText().toString());
-                modify_intent.putExtra("atd", flightATDTextView.getText().toString());
-                modify_intent.putExtra("ata", flightATATextView.getText().toString());
-                modify_intent.putExtra("id", idTextView.getText().toString());
+                Intent modify_intent = new Intent(getApplicationContext(), editFlight.class);
+//                modify_intent.putExtra("flight_id", )
+//                modify_intent.putExtra("flightnumber", flightNumberTextView.getText().toString());
+//                modify_intent.putExtra("departuredate", flightDepartureDateTextView.getText().toString());
+//                modify_intent.putExtra("arrivaldate", flightArrivalDateTextView.getText().toString());
+//                modify_intent.putExtra("atd", flightATDTextView.getText().toString());
+//                modify_intent.putExtra("ata", flightATATextView.getText().toString());
+                modify_intent.putExtra("flight_id", idTextView.getText().toString());
 
 
 
-               Cursor cursor  = dbManager.getFlight(Long.parseLong(idTextView.getText().toString()));
+               //Cursor cursor  = dbManager.getFlight(Long.parseLong(idTextView.getText().toString()));
                 // Use the adapter to bind the curosr to a flight
-               FlightDetails theFlight= adapter.bindFlight(cursor);
+             //  FlightDetails theFlight= adapter.bindFlight(cursor);
 
-                modify_intent.putExtra("theFlight",theFlight);
+               // modify_intent.putExtra("theFlight",theFlight);
 
                 startActivity(modify_intent);
             }

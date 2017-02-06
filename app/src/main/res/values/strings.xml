@@ -25,5 +25,11 @@
     <string name="addFlight">Add Flight</string>
     <string name="takeOffIcon">Take Off Icon</string>
     <string name="landIcon">Land Icon</string>
+    <string name="FlightTimeDay">Flight Time Day</string>
+    <string name="FlightTimeNight">Flight Time Night</string>
+    <string name="ZeroHours">00:00</string>
+    <string name="TailNumber">Tail #</string>
+    <string name="Equipment">Equipment</string>
+    <string name="Position">Position</string>
 
 </resources>

@@ -26,11 +26,13 @@ public class FlightsContract {
     private String[] columns = new String[]{
             FlightEntry._ID,
             FlightEntry.COLUMN_FLIGHT_NUMBER,
-            FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME,
-            FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME,
-            FlightEntry.COLUMN_NIGHT_HOURS,
-            FlightEntry.COLUMN_DAY_HOURS,
-            FlightEntry.COLUMN_TOTAL_HOURS,
+            FlightEntry.COLUMN_DEPARTURE_DATE,
+            FlightEntry.COLUMN_DEPARTURE_TIME,
+            FlightEntry.COLUMN_ARRIVAL_DATE,
+            FlightEntry.COLUMN_ARRIVAL_TIME,
+            FlightEntry.COLUMN_FLIGHT_TIME_NIGHT,
+            FlightEntry.COLUMN_FLIGHT_TIME_DAY,
+            FlightEntry.COLUMN_FLIGHT_TIME_TOTAL,
             FlightEntry.COLUMN_ROLE,
             FlightEntry.COLUMN_PIC,
             FlightEntry.COLUMN_Aircraft_Type,
@@ -47,12 +49,15 @@ public class FlightsContract {
         public static final String COLUMN_FLIGHT_NUMBER = "Flight_Number";
 
         // Dates are stored as Long
-        public static final String COLUMN_DEPARTURE_DATE_AND_TIME = "Departure_Date_And_Time";
-        public static final String COLUMN_ARRIVAL_DATE_AND_TIME = "Arrival_Date_And_Time";
+        public static final String COLUMN_DEPARTURE_DATE = "Departure_Date";
+        public static final String COLUMN_DEPARTURE_TIME = "Departure_Time";
 
-        public static final String COLUMN_NIGHT_HOURS = "Night_Hours";
-        public static final String COLUMN_DAY_HOURS = "Day_Hours";
-        public static final String COLUMN_TOTAL_HOURS = "Total_Hours";
+        public static final String COLUMN_ARRIVAL_DATE = "Arrival_Date";
+        public static final String COLUMN_ARRIVAL_TIME = "Arrival_Time";
+
+        public static final String COLUMN_FLIGHT_TIME_NIGHT = "Night_Hours";
+        public static final String COLUMN_FLIGHT_TIME_DAY = "Day_Hours";
+        public static final String COLUMN_FLIGHT_TIME_TOTAL = "Total_Hours";
 
         public static final String COLUMN_ROLE = "Role";
         public static final String COLUMN_PIC = "PIC";
@@ -89,11 +94,13 @@ public class FlightsContract {
         long theArrivalDateAndTimeToBeSaved = (theFlight.getArrivalDate() + theFlight.getAta());
         ContentValues contentValue = new ContentValues();
         contentValue.put(FlightEntry.COLUMN_FLIGHT_NUMBER, theFlight.getFlight_Number());
-        contentValue.put(FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME, theDepartureDateAndTimeToBeSaved);
-        contentValue.put(FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME, theArrivalDateAndTimeToBeSaved);
-        contentValue.put(FlightEntry.COLUMN_NIGHT_HOURS, theFlight.getFlightTimeNight());
-        contentValue.put(FlightEntry.COLUMN_DAY_HOURS, theFlight.getFlightTimeDay());
-        contentValue.put(FlightEntry.COLUMN_TOTAL_HOURS, theFlight.getFlightTimeTotal());
+        contentValue.put(FlightEntry.COLUMN_DEPARTURE_DATE, theFlight.getDepartureDate() );
+        contentValue.put(FlightEntry.COLUMN_DEPARTURE_TIME, theFlight.getAtd() );
+        contentValue.put(FlightEntry.COLUMN_ARRIVAL_DATE, theFlight.getArrivalDate());
+        contentValue.put(FlightEntry.COLUMN_ARRIVAL_TIME, theFlight.getAta());
+        contentValue.put(FlightEntry.COLUMN_FLIGHT_TIME_NIGHT, theFlight.getFlightTimeNight());
+        contentValue.put(FlightEntry.COLUMN_FLIGHT_TIME_DAY, theFlight.getFlightTimeDay());
+        contentValue.put(FlightEntry.COLUMN_FLIGHT_TIME_TOTAL, theFlight.getFlightTimeTotal());
         contentValue.put(FlightEntry.COLUMN_ROLE, theFlight.getRole());
         contentValue.put(FlightEntry.COLUMN_PIC, theFlight.getRole());
         contentValue.put(FlightEntry.COLUMN_Aircraft_Type, theFlight.getAircraftType());
@@ -114,7 +121,7 @@ public class FlightsContract {
     public Cursor fetch() {
         int howManyRows = 0;
 
-        Cursor cursor = database.query(FlightEntry.TABLE_NAME, columns, null, null, null, null, FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME + " DESC");
+        Cursor cursor = database.query(FlightEntry.TABLE_NAME, columns, null, null, null, null, FlightEntry.COLUMN_DEPARTURE_DATE + " DESC");
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -135,15 +142,18 @@ public class FlightsContract {
         Long _id = theFlight.get_id();
         contentValues.put(FlightEntry.COLUMN_FLIGHT_NUMBER, theFlight.getFlight_Number());
 
-        contentValues.put(FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME, theDepartureDateAndTimeToBeSaved);
-        contentValues.put(FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME, theArrivalDateAndTimeToBeSaved);
+        contentValues.put(FlightEntry.COLUMN_DEPARTURE_DATE, theFlight.getDepartureDate());
+        contentValues.put(FlightEntry.COLUMN_DEPARTURE_TIME, theFlight.getAtd());
 
-        contentValues.put(FlightEntry.COLUMN_DAY_HOURS, timeFormat.format(theFlight.getFlightTimeDay()));
-        contentValues.put(FlightEntry.COLUMN_NIGHT_HOURS, timeFormat.format(theFlight.getFlightTimeNight()));
-        contentValues.put(FlightEntry.COLUMN_TOTAL_HOURS, timeFormat.format(theFlight.getFlightTimeTotal()));
+        contentValues.put(FlightEntry.COLUMN_ARRIVAL_DATE, theFlight.getArrivalDate());
+        contentValues.put(FlightEntry.COLUMN_ARRIVAL_TIME, theFlight.getAta());
+
+        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_DAY, timeFormat.format(theFlight.getFlightTimeDay()));
+        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_NIGHT, timeFormat.format(theFlight.getFlightTimeNight()));
+        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_TOTAL, timeFormat.format(theFlight.getFlightTimeTotal()));
 
         contentValues.put(FlightEntry.COLUMN_ROLE, theFlight.getRole());
-        contentValues.put(FlightEntry.COLUMN_PIC    , theFlight.getPic());
+        contentValues.put(FlightEntry.COLUMN_PIC, theFlight.getPic());
 
         contentValues.put(FlightEntry.COLUMN_Aircraft_Type, theFlight.getAircraftType());
         contentValues.put(FlightEntry.COLUMN_Aircraft_Number    , theFlight.getAircraft_Number());
@@ -161,14 +171,21 @@ public class FlightsContract {
     public void delete(long _id) {
 
         //
-        database.delete(FlightEntry.TABLE_NAME, FlightEntry._ID + "=" + _id, null);
+        database.delete(FlightEntry.TABLE_NAME, FlightEntry._ID + "=" + Long.toString(_id), null);
 
     }
 
     public Cursor getFlight (long _id) {
-        FlightDetails theFlight = new FlightDetails();
+       // FlightDetails theFlight = new FlightDetails();
+        String whereClause = FlightEntry._ID + " = "  + Long.toString(_id);
 
-        Cursor cursor =  database.query(FlightEntry.TABLE_NAME,  columns, null, null, null, null, FlightEntry._ID + " = " + _id);
+
+        Cursor cursor =  database.query(FlightEntry.TABLE_NAME,  columns, whereClause, null, null, null,FlightEntry._ID);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
         return cursor;
     }
 

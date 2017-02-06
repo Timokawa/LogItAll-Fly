@@ -14,7 +14,8 @@ import com.crotello.logitall_fly.datastorage.FlightsContract.FlightEntry;
 
 public class FlightsDBHelper extends SQLiteOpenHelper {
 
-    static final int DB_VERSION = 2;
+    static final int DB_VERSION = 3;
+    //Version 3 sets Dates and Times to seperate columns.
 
     // Database Information
     static final String DB_NAME = "flights.db";
@@ -26,16 +27,18 @@ public class FlightsDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // Create table query
-         final String CREATE_FLIGHT_TABLE =
+        final String CREATE_FLIGHT_TABLE =
                 "create table "
                         + FlightEntry.TABLE_NAME + "("
                         + FlightEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + FlightEntry.COLUMN_FLIGHT_NUMBER + " TEXT, "
-                        + FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME + " INTEGER NOT NULL, "
-                        + FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME + " INTEGER NOT NULL, "
-                        + FlightEntry.COLUMN_NIGHT_HOURS + " INTEGER NOT NULL, "
-                        + FlightEntry.COLUMN_DAY_HOURS + " INTEGER NOT NULL, "
-                        + FlightEntry.COLUMN_TOTAL_HOURS + " INTEGER NOT NULL,"
+                        + FlightEntry.COLUMN_DEPARTURE_DATE + " INTEGER NOT NULL, "
+                        + FlightEntry.COLUMN_DEPARTURE_TIME + " INTEGER NOT NULL, "
+                        + FlightEntry.COLUMN_ARRIVAL_DATE + " INTEGER NOT NULL, "
+                        + FlightEntry.COLUMN_ARRIVAL_TIME + " INTEGER NOT NULL, "
+                        + FlightEntry.COLUMN_FLIGHT_TIME_NIGHT + " INTEGER NOT NULL, "
+                        + FlightEntry.COLUMN_FLIGHT_TIME_DAY + " INTEGER NOT NULL, "
+                        + FlightEntry.COLUMN_FLIGHT_TIME_TOTAL + " INTEGER NOT NULL,"
                         + FlightEntry.COLUMN_ROLE + " INTEGER NOT NULL,"
                         + FlightEntry.COLUMN_PIC + " INTEGER NOT NULL,"
                         + FlightEntry.COLUMN_ICAO_Departure + " INTEGER NOT NULL,"

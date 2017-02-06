@@ -9,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,9 +36,10 @@ public class editFlight extends AppCompatActivity {
 
     private FlightsContract dbManager;
     private TextView theActualTimeOfDepartureTextView, theFlightNumberTextView, theDepartureDateTextView, theArrivalDateTextView, theActualTimeOfArrivalTextView, theFlightTimeTotalTextView;
-    private FlightDetails theFlight;
-    private Boolean departDateSet = Boolean.FALSE, flightNumberSet = Boolean.FALSE, arrivalDateSet = Boolean.FALSE, arrivalTimeSet = Boolean.FALSE;
+    private FlightDetails theFlight = new FlightDetails();
+    private Boolean newFlight = Boolean.FALSE;
 
+    private FlightsCursorAdapter adapter;
 
     //TODO: Make this able to modify a flight too.
     @Override
@@ -47,10 +49,25 @@ public class editFlight extends AppCompatActivity {
 
         setTitle("Flight Details");
 
+        Intent intent = getIntent();
+
         dbManager = new FlightsContract(this);
         dbManager.open();
 
-        theFlight = new FlightDetails();
+
+        String flightId = intent.getStringExtra("flight_id");
+
+        if (flightId != null) {
+            Cursor cursor = dbManager.getFlight(Long.parseLong(flightId));
+            adapter = new FlightsCursorAdapter(this, cursor, 0, 0);
+            theFlight = adapter.bindFlight(cursor);
+
+        }
+        else{
+            newFlight =Boolean.TRUE;
+        }
+
+
         // Create some variables that represent the TextViews we are
         // going to retrieve data from later.
         theFlightNumberTextView = (TextView) findViewById(R.id.setFlightNumber);
@@ -60,6 +77,7 @@ public class editFlight extends AppCompatActivity {
         theActualTimeOfArrivalTextView = (TextView) findViewById(R.id.setFlightAta);
         theFlightTimeTotalTextView = (TextView) findViewById(R.id.totalFlightTime);
 
+        theFlightNumberTextView.setText(theFlight.getFlight_Number());
         theDepartureDateTextView.setText(theFlight.getFormattedDepartureDate());
         theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
         theActualTimeOfDepartureTextView.setText(theFlight.getFormattedDepartureTime());
@@ -239,11 +257,18 @@ public class editFlight extends AppCompatActivity {
 
         theFlight.setFlightNumber(theFlightNumberTextView.getText().toString());
 
+
         Context context = getApplicationContext();
 
-        if (theFlight.validToSave()) {
+        if (theFlight.getValidToSave()) {
 
-            dbManager.insert(theFlight);
+            if (newFlight) {
+                dbManager.insert(theFlight);
+            } else {
+                dbManager.update(theFlight);
+            }
+
+
             dbManager.close();
 
             Toast toast = Toast.makeText(context, "Flight Saved", Toast.LENGTH_SHORT);
@@ -267,14 +292,17 @@ public class editFlight extends AppCompatActivity {
                 .setMessage("Are you sure you want to delete this flight?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        if (theFlight.get_id() == null) {
-                            // If the flight id is null then it's an "Add Flight" so just go back to the flight list.
+                        if (newFlight) {
+                            // If "Add Flight" just go back to the flight list.
                             Intent home_intent = new Intent(getApplicationContext(), FlightListActivity.class)
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(home_intent);
                         } else {
                             // The flight actually exists and we need to remove it from the database
                             dbManager.delete(theFlight.get_id());
+                            Intent home_intent = new Intent(getApplicationContext(), FlightListActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(home_intent);
                         }
                     }
                 })

@@ -15,9 +15,6 @@
         -->
 
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +23,7 @@
 
         <TextView
             android:id="@+id/flight_number_label"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
             android:hint="@string/flightNumberHint"
@@ -116,15 +113,15 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/landIcon"
             app:srcCompat="@drawable/ic_flight_land" />
+
         <TextView
             android:id="@+id/setFlightArrivalDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:background="@android:color/transparent"
             android:paddingBottom="4dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:background="@android:color/transparent"
             android:paddingTop="4dp"
             android:text="@string/setArrivalDateHint"
             android:textSize="16sp" />
@@ -143,46 +140,215 @@
             android:text="@string/setArrivalTimeHint"
             android:textAlignment="textEnd"
             android:textSize="16sp" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/totalFlightTimeLabel"
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp"
-        android:text="@string/totalFLightTimelabel"
-        android:textSize="14sp" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/totalFlightTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/flightTimeDayLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/FlightTimeDay"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/FlightTimeDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:gravity="end"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="@string/ZeroHours"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/FlightTimeNight"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/FlightTimeNight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:gravity="end"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="@string/ZeroHours"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/totalFlightTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/totalFLightTimelabel"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/totalFlightTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:gravity="end"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="@string/ZeroHours"
+                android:textSize="16sp" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TailLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/TailNumber"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/TailNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:gravity="start"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="ZH101"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/EquipmentLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/Equipment"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/Equipment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:gravity="start"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="707"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/PositionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/Position"
+                android:textAlignment="textEnd"
+                android:gravity="end"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/Position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:gravity="start"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:text="DT"
+                android:textSize="16sp" />
+        </TableRow>
+    </TableLayout>
 
 
-    </LinearLayout>
 
 
     <LinearLayout
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="124dp"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -201,6 +367,7 @@
             android:layout_height="wrap_content"
             android:onClick="saveFlight"
             android:text="@string/Save" />
+
     </LinearLayout>
 
 </LinearLayout>

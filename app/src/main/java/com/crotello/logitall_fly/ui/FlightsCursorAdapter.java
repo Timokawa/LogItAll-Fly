@@ -37,8 +37,12 @@ public class FlightsCursorAdapter extends ResourceCursorAdapter {
         // Extract properties from cursor
         String ID = cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry._ID));
         String number = cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_FLIGHT_NUMBER));
-        Long departureDateAndTime = cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_DEPARTURE_DATE_AND_TIME));
-        Long arrivalDateAndTime = cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ARRIVAL_DATE_AND_TIME));
+
+        Long departureDate = cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_DEPARTURE_DATE));
+        Long departureTime = cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_DEPARTURE_TIME));
+
+        Long arrivalDate = cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ARRIVAL_DATE));
+        Long arrivalTime = cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ARRIVAL_TIME));
 
         final Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
         //theCalendar.setTimeInMillis(departureDateAndTime);
@@ -52,11 +56,11 @@ public class FlightsCursorAdapter extends ResourceCursorAdapter {
 
         String departDate, departTime, arriveDate, arriveTime = null;
 
-        departDate = dateFormat.format(departureDateAndTime);
-        departTime = timeFormat.format(departureDateAndTime);
+        departDate = dateFormat.format(departureDate);
+        departTime = timeFormat.format(departureTime);
 
-        arriveDate = dateFormat.format(arrivalDateAndTime);
-        arriveTime = timeFormat.format(arrivalDateAndTime);
+        arriveDate = dateFormat.format(arrivalDate);
+        arriveTime = timeFormat.format(arrivalTime);
 
         // Populate fields with extracted properties
         tvID.setText(ID);
@@ -67,26 +71,27 @@ public class FlightsCursorAdapter extends ResourceCursorAdapter {
         tvATA.setText(arriveTime);
     }
 
-    public FlightDetails bindFlight (Cursor cursor){
-    FlightDetails theFlight =new FlightDetails();
+    public FlightDetails bindFlight(Cursor cursor) {
+        FlightDetails theFlight = new FlightDetails();
+
         theFlight.set_id(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry._ID)));
         theFlight.setFlightNumber(cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_FLIGHT_NUMBER)));
+        theFlight.setDepartureDate(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_DEPARTURE_DATE)));
+        theFlight.setAtd(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_DEPARTURE_TIME)));
+        theFlight.setArrivalDate(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ARRIVAL_DATE)));
+        theFlight.setAta(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ARRIVAL_TIME)));
+        theFlight.setFlightTimeTotal(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_FLIGHT_TIME_TOTAL)));
+        theFlight.setFlightTimeDay(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_FLIGHT_TIME_DAY)));
+        theFlight.setFlightTimeNight(cursor.getLong(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_FLIGHT_TIME_NIGHT)));
+        theFlight.setRole(cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ROLE)));
+        theFlight.setPic(cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_PIC)));
+        theFlight.setICAO_Departure(cursor.getInt(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ICAO_Departure)));
+        theFlight.setICAO_Destination(cursor.getInt(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_ICAO_Destination)));
+        theFlight.setAircraft_Number(cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_Aircraft_Number)));
+        theFlight.setAircraftType(cursor.getInt(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_Aircraft_Type)));
+        theFlight.setValidToSave(Boolean.parseBoolean((cursor.getString(cursor.getColumnIndexOrThrow(FlightsContract.FlightEntry.COLUMN_Aircraft_Type)))));
 
-       // private Long departureDate;
-        //private Long arrivalDate;
-        //private Long ata;
-        //private Long atd;
-      //  private Long flightTimeTotal;
-      //  private Long flightTimeDay;
-      //  private Long flightTimeNight;
-      //  private String role;
-     //   private String pic;
-        // Lookup to another database
-     //   private int ICAO_Departure;
-     //   private int ICAO_Destination;
-     //   private int Aircraft_Number;
-     //   private int AircraftType;
-     //   private boolean ValidToSave;
-            return theFlight;}
+        return theFlight;
+    }
 
 }

@@ -5,7 +5,6 @@ import android.util.Log;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -13,7 +12,7 @@ import java.util.TimeZone;
  * Created by Tim on 14/09/2016.
  */
 
-public class FlightDetails implements Serializable{
+public class FlightDetails implements Serializable {
 
     //Variables that every flight has.
     //TODO Can this be Int?
@@ -31,14 +30,13 @@ public class FlightDetails implements Serializable{
     // Lookup to another database
     private int ICAO_Departure;
     private int ICAO_Destination;
-    private int Aircraft_Number;
+    private String Aircraft_Number;
     private int AircraftType;
     private boolean ValidToSave;
 
     // Constructor
-    public FlightDetails()  {
+    public FlightDetails() {
         Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
-        Date rightNow = new Date();
         _id = null;
         flightNumber = "";
         departureDate = theCalendar.getTimeInMillis();
@@ -53,15 +51,15 @@ public class FlightDetails implements Serializable{
         role = "";
         pic = "";
         AircraftType = 0;
-        Aircraft_Number = 0;
+        Aircraft_Number = "";
         ValidToSave = false;
     }
 
-    public int getAircraft_Number() {
+    public String  getAircraft_Number() {
         return Aircraft_Number;
     }
 
-    public void setAircraft_Number(int aircraft_Number) {
+    public void setAircraft_Number(String aircraft_Number) {
         Aircraft_Number = aircraft_Number;
     }
 
@@ -111,6 +109,9 @@ public class FlightDetails implements Serializable{
 
     public void setFlightNumber(String flightNumber) {
         this.flightNumber = flightNumber;
+        ValidToSave= (
+                (getDepartureDate() > 0) &
+                        (getFlight_Number().length() > 0));
     }
 
     public long getFlightTimeTotal() {
@@ -170,6 +171,9 @@ public class FlightDetails implements Serializable{
     public void setDepartureDate(Long departureDate) {
         this.departureDate = departureDate;
         updateTotal_Time();
+        ValidToSave= (
+                (getDepartureDate() > 0) &
+                        (getFlight_Number().length() > 0));
     }
 
     public long getArrivalDate() {
@@ -239,10 +243,12 @@ public class FlightDetails implements Serializable{
         return timeFormat.format(getFlightTimeTotal());
     }
 
-    public boolean validToSave() {
-        return (
-                (getDepartureDate() > 0) &
-                        (getFlight_Number().equals("")));
+    public void setValidToSave(Boolean Valid_To_Save ){
+        ValidToSave=Valid_To_Save;}
+
+    public boolean getValidToSave() {
+
+        return ValidToSave;
     }
 
 }
