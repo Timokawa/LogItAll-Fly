@@ -148,9 +148,9 @@ public class FlightsContract {
         contentValues.put(FlightEntry.COLUMN_ARRIVAL_DATE, theFlight.getArrivalDate());
         contentValues.put(FlightEntry.COLUMN_ARRIVAL_TIME, theFlight.getAta());
 
-        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_DAY, timeFormat.format(theFlight.getFlightTimeDay()));
-        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_NIGHT, timeFormat.format(theFlight.getFlightTimeNight()));
-        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_TOTAL, timeFormat.format(theFlight.getFlightTimeTotal()));
+        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_DAY, theFlight.getFlightTimeDay());
+        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_NIGHT, theFlight.getFlightTimeNight());
+        contentValues.put(FlightEntry.COLUMN_FLIGHT_TIME_TOTAL, theFlight.getFlightTimeTotal());
 
         contentValues.put(FlightEntry.COLUMN_ROLE, theFlight.getRole());
         contentValues.put(FlightEntry.COLUMN_PIC, theFlight.getPic());

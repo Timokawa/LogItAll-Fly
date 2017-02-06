@@ -35,7 +35,16 @@ import java.util.TimeZone;
 public class editFlight extends AppCompatActivity {
 
     private FlightsContract dbManager;
-    private TextView theActualTimeOfDepartureTextView, theFlightNumberTextView, theDepartureDateTextView, theArrivalDateTextView, theActualTimeOfArrivalTextView, theFlightTimeTotalTextView;
+    private TextView
+            theFlightNumberTextView,
+            theDepartureDateTextView,
+            theArrivalDateTextView,
+            theActualTimeOfDepartureTextView,
+            theActualTimeOfArrivalTextView,
+            theFlightTimeDayTextView,
+            theFlightTimeNightTextView,
+            theFlightTimeTotalTextView;
+
     private FlightDetails theFlight = new FlightDetails();
     private Boolean newFlight = Boolean.FALSE;
 
@@ -62,9 +71,8 @@ public class editFlight extends AppCompatActivity {
             adapter = new FlightsCursorAdapter(this, cursor, 0, 0);
             theFlight = adapter.bindFlight(cursor);
 
-        }
-        else{
-            newFlight =Boolean.TRUE;
+        } else {
+            newFlight = Boolean.TRUE;
         }
 
 
@@ -75,17 +83,21 @@ public class editFlight extends AppCompatActivity {
         theArrivalDateTextView = (TextView) findViewById(R.id.setFlightArrivalDate);
         theActualTimeOfDepartureTextView = (TextView) findViewById(R.id.setFlightAtd);
         theActualTimeOfArrivalTextView = (TextView) findViewById(R.id.setFlightAta);
+        theFlightTimeDayTextView = (TextView) findViewById(R.id.setFlightTimeDay);
+        theFlightTimeNightTextView = (TextView) findViewById(R.id.setflightTimeNight);
         theFlightTimeTotalTextView = (TextView) findViewById(R.id.totalFlightTime);
+
 
         theFlightNumberTextView.setText(theFlight.getFlight_Number());
         theDepartureDateTextView.setText(theFlight.getFormattedDepartureDate());
         theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
         theActualTimeOfDepartureTextView.setText(theFlight.getFormattedDepartureTime());
         theActualTimeOfArrivalTextView.setText(theFlight.getFormattedArrivalTime());
-
-        theFlightTimeTotalTextView.setVisibility(View.INVISIBLE);
+        theFlightTimeDayTextView.setText(theFlight.getFormattedFlightTimeDay());
+        theFlightTimeNightTextView.setText(theFlight.getFormattedFlightTimeNight());
 
         setTheFlightTimeTotalTextView();
+        theFlight.updateValidToSave();
 
         theDepartureDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +132,8 @@ public class editFlight extends AppCompatActivity {
                         theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
 
                         setTheFlightTimeTotalTextView();
+
+                        theFlight.updateValidToSave();
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select Departure Date");
@@ -164,6 +178,7 @@ public class editFlight extends AppCompatActivity {
                         theArrivalDateTextView.setText(theFlight.getFormattedArrivalDate());
 
                         setTheFlightTimeTotalTextView();
+                        theFlight.updateValidToSave();
 
                     }
                 }, mYear, mMonth, mDay);
@@ -196,10 +211,8 @@ public class editFlight extends AppCompatActivity {
                         theFlight.setAtd(theCalendar.getTimeInMillis());
                         theActualTimeOfDepartureTextView.setText(theFlight.getFormattedDepartureTime());
 
-                        theFlight.setAta(theCalendar.getTimeInMillis());
-                        theActualTimeOfArrivalTextView.setText(theFlight.getFormattedArrivalTime());
-
                         setTheFlightTimeTotalTextView();
+                        theFlight.updateValidToSave();
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -225,19 +238,67 @@ public class editFlight extends AppCompatActivity {
                         theCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         theCalendar.set(Calendar.MINUTE, selectedMinute);
 
-                        if ((theCalendar.getTimeInMillis() < theFlight.getAtd()) & (theFlight.getDepartureDate() == theFlight.getArrivalDate())) {// Arrival is before departure
-                            // Set arrival same as departure
-                            theCalendar.setTimeInMillis(theFlight.getAtd());
-                            Toast toast = Toast.makeText(editFlight.this, "Arrival time needs to be same or after Departure time. Changed.", Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-
                         theFlight.setAta(theCalendar.getTimeInMillis());
                         theActualTimeOfArrivalTextView.setText(theFlight.getFormattedArrivalTime());
                         setTheFlightTimeTotalTextView();
+                        theFlight.updateValidToSave();
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Arrival Time");
+                mTimePicker.show();
+            }
+        });
+
+        theFlightTimeDayTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
+
+                theCalendar.setTimeInMillis(theFlight.getFlightTimeDay());
+                int hour = theCalendar.get(Calendar.HOUR_OF_DAY);
+                int minute = theCalendar.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(editFlight.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        theCalendar.setTimeInMillis(0);
+                        theCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        theCalendar.set(Calendar.MINUTE, selectedMinute);
+
+                        theFlight.setFlightTimeDay(theCalendar.getTimeInMillis());
+                        theFlightTimeDayTextView.setText(theFlight.getFormattedFlightTimeDay());
+                        setTheFlightTimeTotalTextView();
+                        theFlight.updateValidToSave();
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Day Hours");
+                mTimePicker.show();
+            }
+        });
+
+        theFlightTimeNightTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar theCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.getDefault());
+
+                theCalendar.setTimeInMillis(theFlight.getFlightTimeNight());
+                int hour = theCalendar.get(Calendar.HOUR_OF_DAY);
+                int minute = theCalendar.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(editFlight.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        theCalendar.setTimeInMillis(0);
+                        theCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        theCalendar.set(Calendar.MINUTE, selectedMinute);
+
+                        theFlight.setFlightTimeNight(theCalendar.getTimeInMillis());
+                        theFlightTimeNightTextView.setText(theFlight.getFormattedFlightTimeNight());
+                        setTheFlightTimeTotalTextView();
+                        theFlight.updateValidToSave();
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Night Hours");
                 mTimePicker.show();
             }
         });
@@ -245,18 +306,15 @@ public class editFlight extends AppCompatActivity {
 
     private void setTheFlightTimeTotalTextView() {
 
-        if (theFlight.getFlightTimeTotal() > 0) {
+        theFlightTimeTotalTextView.setText(theFlight.getFormattedFlightTimeTotal());
 
-            theFlightTimeTotalTextView.setVisibility(View.VISIBLE);
-            theFlightTimeTotalTextView.setText(theFlight.getFormattedFlightTimeTotal());
-        }
     }
 
 
     public void saveFlight(View view) throws IOException {
 
         theFlight.setFlightNumber(theFlightNumberTextView.getText().toString());
-
+        theFlight.updateValidToSave();
 
         Context context = getApplicationContext();
 
@@ -279,7 +337,9 @@ public class editFlight extends AppCompatActivity {
             startActivity(home_intent);
 
         } else {
-            Toast toast = Toast.makeText(context, "The departure date and Flight Number must be entered.", Toast.LENGTH_LONG);
+
+
+            Toast toast = Toast.makeText(context, "Check inputs.  Flight number must be set and Arrival must be after departure.", Toast.LENGTH_LONG);
             toast.show();
         }
     }

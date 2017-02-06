@@ -165,7 +165,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/FlightTimeDay"
+                android:id="@+id/setFlightTimeDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0dp"
@@ -198,7 +198,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/FlightTimeNight"
+                android:id="@+id/setflightTimeNight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0dp"

@@ -24,10 +24,6 @@
             android:name=".ui.editFlight">
          </activity>
 
-        <activity
-            android:name=".ui.ModifyFlightActivity">
-          </activity>
-
     </application>
 
 </manifest>

@@ -43,9 +43,9 @@ public class FlightDetails implements Serializable {
         arrivalDate = theCalendar.getTimeInMillis();
         ata = theCalendar.getTimeInMillis();
         atd = theCalendar.getTimeInMillis();
-        flightTimeTotal = Long.MIN_VALUE;
-        flightTimeDay = Long.MIN_VALUE;
-        flightTimeNight = Long.MIN_VALUE;
+        flightTimeTotal = 0L;
+        flightTimeDay = 0L;
+        flightTimeNight =0L;
         ICAO_Departure = 0;
         ICAO_Destination = 0;
         role = "";
@@ -55,7 +55,7 @@ public class FlightDetails implements Serializable {
         ValidToSave = false;
     }
 
-    public String  getAircraft_Number() {
+    public String getAircraft_Number() {
         return Aircraft_Number;
     }
 
@@ -109,7 +109,7 @@ public class FlightDetails implements Serializable {
 
     public void setFlightNumber(String flightNumber) {
         this.flightNumber = flightNumber;
-        ValidToSave= (
+        ValidToSave = (
                 (getDepartureDate() > 0) &
                         (getFlight_Number().length() > 0));
     }
@@ -139,11 +139,14 @@ public class FlightDetails implements Serializable {
     }
 
     private void updateTotal_Time() {
-        if ((this.arrivalDate + this.ata) - (this.departureDate + this.atd) > 0) {
+        if ((this.arrivalDate + this.ata) - (this.departureDate + this.atd) > 0L) {
 
             this.flightTimeTotal = ((this.arrivalDate + this.ata) - (this.departureDate + this.atd));
             Log.i("FLY ATA", Long.toString(this.ata));
             Log.i("FLY ATD", Long.toString(this.atd));
+        }
+        else{
+            this.flightTimeTotal = 0L;
         }
     }
 
@@ -171,9 +174,9 @@ public class FlightDetails implements Serializable {
     public void setDepartureDate(Long departureDate) {
         this.departureDate = departureDate;
         updateTotal_Time();
-        ValidToSave= (
-                (getDepartureDate() > 0) &
-                        (getFlight_Number().length() > 0));
+        ValidToSave = (
+                (getDepartureDate() > 0L) &
+                        (getFlight_Number().length() > 0L));
     }
 
     public long getArrivalDate() {
@@ -236,6 +239,20 @@ public class FlightDetails implements Serializable {
         return timeFormat.format(getAtd());
     }
 
+    public String getFormattedFlightTimeDay() {
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return timeFormat.format(getFlightTimeDay());
+    }
+
+    public String getFormattedFlightTimeNight() {
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return timeFormat.format(getFlightTimeNight());
+    }
+
     public String getFormattedFlightTimeTotal() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -243,12 +260,22 @@ public class FlightDetails implements Serializable {
         return timeFormat.format(getFlightTimeTotal());
     }
 
-    public void setValidToSave(Boolean Valid_To_Save ){
-        ValidToSave=Valid_To_Save;}
+    public void setValidToSave(Boolean Valid_To_Save) {
+
+        ValidToSave = Valid_To_Save;
+    }
 
     public boolean getValidToSave() {
 
         return ValidToSave;
+    }
+
+    public void updateValidToSave() {
+        ValidToSave =
+                this.flightNumber.length() > 0 &
+                        this.departureDate > 0L &
+                        this.flightTimeTotal > 0L;
+
     }
 
 }
